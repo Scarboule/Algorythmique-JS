@@ -48,44 +48,60 @@ class Survivor{
 
 
 function start(){
-    new Jason();
-    let survivor[1] = new Survivor();
-    let survivor[2] = new Survivor();
-    let survivor[3] = new Survivor();
-    let survivor[4] = new Survivor();
-    let survivor[5] = new Survivor();
+    let jason = new Jason();
+    
+    let survivor1 = new Survivor();
+    let survivor2 = new Survivor();
+    let survivor3 = new Survivor();
+    let survivor4 = new Survivor();
+    let survivor5 = new Survivor();
+    let survivors =[
+        survivor1,
+        survivor2,
+        survivor3,
+        survivor4,
+        survivor5
+    ];
     let alive = 5;
-    while(Jason.pv > 0 || alive != 0){
-        let i = 0;
-        while(i < alive){  
-            if(survivor[i].isDead != true){
-                i++;
-            } else{
-                let p = Math.floor(Math.random());
-                if(p < 0.4){
-                    survivor[i].isDead = true;
+    while(jason.pv >= 1 && alive >= 1){
+        survivors.forEach(element => {
+            if(element.isDead == false){
+                let p = Math.floor(Math.random() * 10);
+                console.log(p);
+                if(p < 4){
+                    element.isDead = true;
                     alive -= 1;
-                    console.log(survivor[i].name, 'à été tué par Jason.');
+                    console.log(element.name, 'à été tué par Jason.');
                     console.log('Il reste', alive, 'survivants.');
-                }else if (p < 0.8){
-                    Jason.pv -= 10;
-                    console.log(survivor[i].name,'à esquiver et contre attaquer !');
-                    console.log('Il reste', Jason.pv, 'à Jason.');
+                }else if (p < 8){
+                    jason.pv -= 10;
+                    console.log(element.name,'à esquiver et contre attaquer !');
+                    console.log('Jason perd 10pv.');
+                    console.log('Il reste', jason.pv, 'pv à Jason.');
                 }else {
-                    Jason.pv -= 15;
-                    survivor[i].isDead = true;
+                    jason.pv -= 15;
+                    element.isDead = true;
                     alive -= 1;
-                    console.log(survivor[i].name, 'à infliger une attique suicide sur Jason !');
+                    console.log(element.name, 'à infliger une attique suicide sur Jason !');
+                    console.log('Jason perd 15pv.');
                     console.log('Il reste', alive, 'survivants.');
-                    console.log('Il reste', Jason.pv, 'à Jason.');
+                    console.log('Il reste', jason.pv, 'pv à Jason.');
                 }
-                console.log(1);
+            console.log(1);
             }
-            console.log(2);            
-        }
-        console.log(3);
+        });
+        console.log(jason.pv, alive);
     }
-    console.log(4);
+    if(alive < 1){
+        console.log('Tout les survivants sont mort.');
+    }else if(jason.pv < 1){
+        console.log('Jason à été déchus, Bravo !');
+    }
+    console.log('Voici le nom de ceux qui ont donner leur vie dans cette battaille contre le tueur en serie.')
+    survivors.forEach(element => {
+        if(element.isDead == true){
+            console.log(element.name, 'qui était', element.cara);
+        }
+    });
 }
-
 start();
